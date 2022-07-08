@@ -14,9 +14,8 @@ from flask import request, Response
 
 
 async def user_data_review() -> Response:
-    jwt = request.headers.get("x-thebes-answer")
-    msg_error = "Unexpected error occurred"
     try:
+        jwt = request.headers.get("x-thebes-answer")
         unique_id = await JwtService.decode_jwt_and_get_unique_id(jwt=jwt)
         result = await UserReviewDataService.get_registration_data(unique_id=unique_id)
         response = ResponseModel(
@@ -29,21 +28,20 @@ async def user_data_review() -> Response:
     except ErrorOnDecodeJwt as ex:
         Gladsheim.error(error=ex, message=ex.msg)
         response = ResponseModel(
-            success=False, code=InternalCode.JWT_INVALID, message=msg_error
+            success=False, code=InternalCode.JWT_INVALID, message="Error when trying to decode jwt"
         ).build_http_response(status=HTTPStatus.UNAUTHORIZED)
         return response
 
     except UserUniqueIdNotExists as ex:
-        Gladsheim.error(error=ex, message=ex.msg)
+        Gladsheim.info(error=ex, message=ex.msg)
         response = ResponseModel(
-            success=False, code=InternalCode.DATA_NOT_FOUND, message=msg_error
-        ).build_http_response(status=HTTPStatus.INTERNAL_SERVER_ERROR)
+            success=True, code=InternalCode.DATA_NOT_FOUND, message="There is no user with this token"
+        ).build_http_response(status=HTTPStatus.OK)
         return response
 
     except Exception as ex:
         Gladsheim.error(error=ex)
         response = ResponseModel(
-            success=False, code=InternalCode.INTERNAL_SERVER_ERROR, message=msg_error
+            success=False, code=InternalCode.INTERNAL_SERVER_ERROR, message="Unexpected error occurred"
         ).build_http_response(status=HTTPStatus.INTERNAL_SERVER_ERROR)
         return response
-

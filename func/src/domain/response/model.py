@@ -1,11 +1,12 @@
 # Jormungandr - Onboarding
-from ...domain.enums.code import InternalCode
+from ..enums.code import InternalCode
 
 # Standards
 from json import dumps
 
 # Third party
 from flask import Response
+from nidavellir import Sindri
 
 
 class ResponseModel:
@@ -23,7 +24,8 @@ class ResponseModel:
                 "message": self.message,
                 "success": self.success,
                 "code": self.code,
-            }
+            },
+            default=Sindri.resolver
         )
         self.response = response_model
         return response_model
