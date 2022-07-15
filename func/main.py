@@ -36,7 +36,7 @@ async def user_data_review() -> Response:
         Gladsheim.info(error=ex, message=ex.msg)
         response = ResponseModel(
             success=True, code=InternalCode.DATA_NOT_FOUND, message="There is no user with this token"
-        ).build_http_response(status=HTTPStatus.OK)
+        ).build_http_response(status=HTTPStatus.BAD_REQUEST)
         return response
 
     except Exception as ex:
