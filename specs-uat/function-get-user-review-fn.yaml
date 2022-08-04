@@ -1,0 +1,55 @@
+include:
+- ./func/*
+kind: ArchiveUploadSpec
+name: func-TeeA
+
+---
+apiVersion: fission.io/v1
+kind: Package
+metadata:
+  creationTimestamp: null
+  name: get-user-review-fn-51cd787b-254e-4d46-a049-a92088d59bb6
+  namespace: default
+spec:
+  deployment:
+    checksum: {}
+  environment:
+    name: get-user-review-env
+    namespace: default
+  source:
+    checksum: {}
+    type: url
+    url: archive://func-TeeA
+status:
+  buildstatus: pending
+  lastUpdateTimestamp: "2022-07-15T20:38:16Z"
+
+---
+apiVersion: fission.io/v1
+kind: Function
+metadata:
+  creationTimestamp: null
+  name: get-user-review-fn
+  namespace: default
+spec:
+  InvokeStrategy:
+    ExecutionStrategy:
+      ExecutorType: newdeploy
+      MaxScale: 1
+      MinScale: 1
+      SpecializationTimeout: 120
+      TargetCPUPercent: 0
+    StrategyType: execution
+  concurrency: 500
+  environment:
+    name: get-user-review-env
+    namespace: default
+  functionTimeout: 60
+  idletimeout: 120
+  package:
+    functionName: main.user_data_review
+    packageref:
+      name: get-user-review-fn-51cd787b-254e-4d46-a049-a92088d59bb6
+      namespace: default
+  requestsPerPod: 1
+  resources: {}
