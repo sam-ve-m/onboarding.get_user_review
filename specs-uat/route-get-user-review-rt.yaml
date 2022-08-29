@@ -14,10 +14,10 @@ spec:
   ingressconfig:
     annotations: null
     host: '*'
-    path: /onboarding/get-user-review
+    path: /onboarding/get_user_review
     tls: ""
   method: ""
   methods:
   - GET
   prefix: ""
-  relativeurl: /onboarding/get-user-review
+  relativeurl: /onboarding/get_user_review

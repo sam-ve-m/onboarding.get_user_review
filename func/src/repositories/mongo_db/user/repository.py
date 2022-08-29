@@ -3,14 +3,9 @@ from ..base_repository.base import MongoDbBaseRepository
 
 # Third party
 from etria_logger import Gladsheim
-from decouple import config
 
 
 class UserRepository(MongoDbBaseRepository):
-
-    database = config("MONGODB_DATABASE_NAME")
-    collection = config("MONGODB_USER_COLLECTION")
-
     @classmethod
     async def find_one_by_unique_id(cls, unique_id: str) -> dict:
         collection = await cls._get_collection()

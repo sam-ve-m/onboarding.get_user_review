@@ -42,8 +42,8 @@ class CustomerRegistrationBuilder:
         return self
 
     def personal_phone(self):
-        phone = self.__user_data.get("cel_phone")
-        self.__buffer["personal"].update({"cel_phone": phone})
+        phone = self.__user_data.get("phone")
+        self.__buffer["personal"].update({"phone": phone})
         return self
 
     def personal_nationality(self):
@@ -87,28 +87,28 @@ class CustomerRegistrationBuilder:
         return self
 
     def marital_spouse_name(self):
-        spouse = self.__user_data.get("marital", {}).get("spouse", {})
+        spouse = self.__user_data.get("marital", {}).get("spouse")
         if spouse:
             spouse_name = spouse.get("name")
             self.__buffer["marital"]["spouse"].update({"spouse_name": spouse_name})
         return self
 
     def marital_spouse_cpf(self):
-        spouse = self.__user_data.get("marital", {}).get("spouse", {})
+        spouse = self.__user_data.get("marital", {}).get("spouse")
         if spouse:
             spouse_cpf = spouse.get("cpf")
             self.__buffer["marital"]["spouse"].update({"spouse_cpf": spouse_cpf})
         return self
 
     def marital_nationality(self):
-        spouse = self.__user_data.get("marital", {}).get("spouse", {})
+        spouse = self.__user_data.get("marital", {}).get("spouse")
         if spouse:
             nationality = spouse.get("nationality")
             self.__buffer["marital"]["spouse"].update({"nationality": nationality})
         return self
 
     def documents_cpf(self):
-        cpf = self.__user_data.get("identifier_document").get("cpf")
+        cpf = self.__user_data.get("identifier_document", {}).get("cpf")
         self.__buffer["documents"].update({"cpf": cpf})
         return self
 
@@ -254,5 +254,5 @@ class CustomerRegistrationBuilder:
             .address_zip_code()
             .address_state()
             .address_phone()
-         )
+        )
         return self.__buffer
