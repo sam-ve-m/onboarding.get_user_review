@@ -6,7 +6,6 @@ class CustomerRegistrationBuilder:
             "marital": {"spouse": {}},
             "documents": {},
             "address": {},
-            "external_exchange_account_us": {},
         }
 
     def personal_name(self):
