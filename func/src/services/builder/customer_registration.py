@@ -60,6 +60,11 @@ class CustomerRegistrationBuilder:
         self.__buffer["personal"].update({"income": income})
         return self
 
+    def personal_us_person(self):
+        us_person = self.__user_data.get("us_person")
+        self.__buffer["personal"].update({"us_person": us_person})
+        return self
+
     def personal_occupation_activity(self):
         occupation_activity = self.__user_data.get("occupation", {}).get("activity")
 
@@ -231,6 +236,7 @@ class CustomerRegistrationBuilder:
             .personal_company_cnpj()
             .personal_patrimony()
             .personal_income()
+            .personal_us_person()
             .personal_tax_residences()
             .personal_birth_place_country()
             .personal_birth_place_city()
