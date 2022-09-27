@@ -216,6 +216,11 @@ class CustomerRegistrationBuilder:
         self.__buffer["address"].update({"phone": state})
         return self
 
+    def address_complement(self):
+        state = self.__user_data.get("address", {}).get("complement")
+        self.__buffer["address"].update({"complement": state})
+        return self
+
     def build(self) -> dict:
         (
             self.personal_name()
@@ -253,5 +258,6 @@ class CustomerRegistrationBuilder:
             .address_zip_code()
             .address_state()
             .address_phone()
+            .address_complement()
         )
         return self.__buffer
