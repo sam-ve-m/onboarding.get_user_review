@@ -60,6 +60,11 @@ class CustomerRegistrationBuilder:
         self.__buffer["personal"].update({"income": income})
         return self
 
+    def personal_us_person(self):
+        us_person = self.__user_data.get("us_person")
+        self.__buffer["personal"].update({"us_person": us_person})
+        return self
+
     def personal_occupation_activity(self):
         occupation_activity = self.__user_data.get("occupation", {}).get("activity")
 
@@ -216,6 +221,11 @@ class CustomerRegistrationBuilder:
         self.__buffer["address"].update({"phone": state})
         return self
 
+    def address_complement(self):
+        state = self.__user_data.get("address", {}).get("complement")
+        self.__buffer["address"].update({"complement": state})
+        return self
+
     def build(self) -> dict:
         (
             self.personal_name()
@@ -231,6 +241,7 @@ class CustomerRegistrationBuilder:
             .personal_company_cnpj()
             .personal_patrimony()
             .personal_income()
+            .personal_us_person()
             .personal_tax_residences()
             .personal_birth_place_country()
             .personal_birth_place_city()
@@ -253,5 +264,6 @@ class CustomerRegistrationBuilder:
             .address_zip_code()
             .address_state()
             .address_phone()
+            .address_complement()
         )
         return self.__buffer
